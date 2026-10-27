@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="네이버웹툰 10작품의 댓글 반응과 문화신호를 살펴보는 분석 대시보드">
+<title>네이버웹툰 남성 인기 10작품 댓글 반응 분석</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./assets/style.css">
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.5.3/papaparse.min.js"></script>
+<script defer src="./assets/config.js"></script><script defer src="./assets/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 이동</a>
+<header><div class="wrap"><div class="eyebrow">댓글에서 읽는 독자의 마음 · 반응 분석 대시보드</div><h1>네이버웹툰 남성 인기 10작품<br>댓글 반응 분석</h1><p class="intro">어떤 장면에 공감하고, 무엇을 더 보고 싶어 할까?<br>대표 회차의 댓글에서 감정과 욕망, 작품 기획의 단서를 읽습니다.</p><div class="load"><span class="dot"></span><span id="loaded" role="status" aria-live="polite">데이터를 불러오는 중입니다…</span><button id="reload" type="button">새로 불러오기</button></div><p class="small">‘남성 인기’는 남성향 장르·분위기에 따른 추정입니다. 공식 성별 순위가 아닙니다.</p></div></header>
+<nav aria-label="섹션 목차"><div class="wrap"><a href="#overview">반응 개요</a><a href="#emotion">감정과 욕구</a><a href="#clusters">반응 군집</a><a href="#scatter">댓글 분포</a><a href="#episodes">대표 회차</a><a href="#signals">문화신호 검증</a><a href="#works">작품별 이야기</a><a href="#insights">기획 인사이트</a><a href="#method">방법과 한계</a></div></nav>
+<main id="main" class="wrap"><div id="error" role="alert" hidden></div><div id="dashboard" hidden>
+<section id="overview"><div class="section-title"><span>01</span><div><h2>숫자로 보는 댓글 반응</h2><p>분석 표본의 공감 합계입니다. 작품 전체의 인기나 조회수를 뜻하지 않습니다.</p></div></div><div id="metrics" class="metrics"></div><article class="panel"><h3>작품별 공감 수 합계</h3><p>선정된 댓글에 쌓인 공감 · 단위: 건</p><div class="chart tall"><canvas id="likes" role="img" aria-label="작품별 공감 합계 가로 막대"></canvas></div></article></section>
+<section id="emotion"><div class="section-title"><span>02</span><div><h2>남는 감정, 이어지는 욕구</h2><p>공감 가중치 없이 댓글 한 개를 하나로 계산합니다.</p></div></div><article class="panel"><h3>작품 × 핵심감정</h3><p>작품별 분석 댓글 내 비율 · 해당 없음도 분모에 포함</p><div class="chart tall"><canvas id="emotions" role="img" aria-label="작품별 핵심감정 100퍼센트 누적 막대"></canvas></div></article><article class="panel"><h3>작품 × 감상 이후 욕구</h3><p>색이 진할수록 해당 욕구로 분류된 댓글이 많습니다. 숫자는 댓글 수입니다.</p><div class="table-scroll" id="heatmap"></div></article></section>
+<section id="clusters"><div class="section-title"><span>03</span><div><h2>공감을 모은 반응 군집</h2><p>같은 반응 유형을 묶어 공감 합계가 높은 15개를 비교합니다.</p></div></div><article class="panel"><label for="work-filter">작품 선택</label> <select id="work-filter"><option value="">전체 작품</option></select><div class="chart clusters"><canvas id="cluster" role="img" aria-label="반응 군집 상위 15개 공감 합계"></canvas></div></article></section>
+<section id="scatter"><div class="section-title"><span>04</span><div><h2>공감과 비공감 사이</h2><p>점에 마우스를 올리거나 터치하면 댓글 일부와 반응 수를 볼 수 있습니다.</p></div></div><article class="panel"><h3>분석 댓글의 반응 분포</h3><p>가로: 공감 수 · 세로: 비공감 수 · 베스트 여부로 색 구분</p><div class="chart"><canvas id="reactions" role="img" aria-label="공감과 비공감 산점도"></canvas></div><details><summary>댓글 원문과 반응 수를 표로 보기</summary><div class="table-scroll" id="comment-table"></div></details></article></section>
+<section id="episodes"><div class="section-title"><span>05</span><div><h2>대표 회차의 규모</h2><p>조회 가능한 무료 회차 중 댓글이 가장 많은 회차입니다. 조회수 기준이 아닙니다.</p></div></div><article class="panel"><h3>회차 전체 댓글 수와 별점</h3><p>댓글 수는 답글 포함 · 왼쪽 로그 눈금(10배 간격) · 별점은 오른쪽 눈금(0~10)</p><div class="chart tall"><canvas id="episode-chart" role="img" aria-label="대표 회차 댓글 수 로그 막대와 별점"></canvas></div><div class="table-scroll" id="episode-table"></div></article></section>
+<section id="signals"><div class="section-title"><span>06</span><div><h2>문화신호, 어디까지 확인됐을까?</h2><p>댓글에서 도출한 해석과 외부 근거를 나란히 살펴봅니다. 확인 판정이 인과관계를 보증하지는 않습니다.</p></div></div><div class="signal-layout"><article class="panel"><h3>검증 판정별 개수</h3><div class="chart donut"><canvas id="verdicts" role="img" aria-label="확인 부분 확인 미확보 판정 개수 도넛"></canvas></div></article><article class="panel signal-note"><h3>판정 읽는 법</h3><p><span class="badge confirmed">확인</span> 외부 근거로 확인된 신호</p><p><span class="badge partial">부분 확인</span> 일부 근거나 연결만 확인</p><p><span class="badge missing">미확보</span> 외부 검증 근거가 부족한 추정</p><p>세부 판정·반례는 아래 표에 원문으로 보존했습니다.</p></article></div><article class="panel"><div class="table-scroll" id="signal-table"></div></article></section>
+<section id="works"><div class="section-title"><span>07</span><div><h2>작품마다 다른 독자의 기대</h2><p>핵심 반응에서 정체성까지, 반례와 함께 읽는 작품별 요약입니다.</p></div></div><div class="work-grid" id="work-cards"></div></section>
+<section id="insights"><div class="section-title"><span>08</span><div><h2>반응 분석에서 기획으로</h2><p>종합인사이트 6단계 · 「이세계 도전 매운맛 5단계 여고생」 기획 시사점</p></div></div><div id="timeline" class="timeline"></div><article id="insight-summary" class="panel summary"></article></section>
+<section id="method"><div class="section-title"><span>09</span><div><h2>방법론과 데이터 한계</h2><p>이 숫자를 해석하기 전에 함께 확인해 주세요.</p></div></div><article class="panel"><ul><li>조회수가 비공개이므로 댓글 수로 대표 회차를 선정했습니다.</li><li>남성 독자는 장르·분위기와 발화 정황으로 추정하며, 작성자의 성별을 확인하지 않았습니다.</li><li>댓글 작성자 ID·닉네임을 수집하지 않았습니다.</li><li>공감순으로 선정한 댓글 표본이므로 전체 독자 반응을 대표하지 않습니다.</li></ul><details><summary>수집 방법·출처·한계 전체 보기</summary><dl id="method-details"></dl></details></article></section>
+</div></main><footer class="wrap">댓글 반응은 해석의 출발점입니다. 작품의 성과나 독자 전체의 의견으로 일반화하지 마세요.<a href="#">맨 위로 ↑</a></footer>
+</body></html>
